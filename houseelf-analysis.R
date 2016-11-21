@@ -14,10 +14,25 @@ get_gc_content<-function(sequence){
   return(gc_content)
 }
 
-get_ear_length <- function(seq){
-   #Calculate the GC-content for one or more sequences
-   ear_lengths <- ifelse(seq > 10, "large", "small")
+gc_content<-get_gc_content(elf_data$dnaseq)
+gc_content
+
+get_ear_length <- function(ear_length){
+   #Calculate the size class for one or more ear lengths
+   ear_lengths <- ifelse(ear_length > 10, "large", "small")
    return(ear_lengths)
 }
 
-get_gc_content(elf_data)
+ear_length<-get_ear_length(elf_data$earlength)
+ear_length
+
+#create a data frame with individual ID, ear length class, 
+#and the gc-content for each individual.
+
+elf_frame<-data.frame(id=elf_data$id,
+                      ear_length=ear_length,
+                      gc_content=gc_content, stringsAsFactors = FALSE)
+
+write.csv(elf_frame, "elf_ear_gc_data.csv")
+
+
